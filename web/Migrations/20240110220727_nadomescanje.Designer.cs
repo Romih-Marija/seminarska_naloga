@@ -12,8 +12,8 @@ using web.Data;
 namespace web.Migrations
 {
     [DbContext(typeof(oaContext))]
-    [Migration("20231128095635_AppUser")]
-    partial class AppUser
+    [Migration("20240110220727_nadomescanje")]
+    partial class nadomescanje
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -234,6 +234,87 @@ namespace web.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("web.Models.ObjavaIscemOa", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("AvtorObjave")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DatumObjave")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DelovniCas")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Ime")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Lokacija")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Opis")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Priimek")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("ObjavaIscemOa", (string)null);
+                });
+
+            modelBuilder.Entity("web.Models.ObjavaNudimOa", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("AvtorObjave")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DatumObjave")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Ime")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Lokacija")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Opis")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Priimek")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("ObjavaNudimOa", (string)null);
                 });
 
             modelBuilder.Entity("web.Models.UporabniskiRacun", b =>

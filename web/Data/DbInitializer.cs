@@ -43,11 +43,57 @@ namespace web.Data
                     DelovniCas="polovični delovni čas / popoldan",
                     Opis="Potrebujem pomoč pri vsakodnevnih opravilih.",
                     AvtorObjave="Ana Novak",
-                    DatumObjave=DateTime.Parse("2024-01-02")}
+                    DatumObjave=DateTime.Parse("2024-01-02")},
+                new ObjavaIscemOa{Ime="Ana",
+                    Priimek="Arh",
+                    Lokacija="Ljubljana",
+                    DelovniCas="polni delovni čas/ izmenično",
+                    Opis="",
+                    AvtorObjave="Ana Arh",
+                    DatumObjave=DateTime.Parse("2023-05-12"),
+                    }
             );
             context.SaveChanges();
 
-            
+            context.ObjaveNudimOa.AddRange(
+                new ObjavaNudimOa{Ime="Julija",
+                    Priimek="Oblak",
+                    Lokacija="Koper",
+                    Opis="Po izobrazbi sem medicinska sestra, vendar že od začetka delam kot osebna asistentka in imam 5 let izkušenj dela z osebami s posebnimi potrebami. Imam izpit za avto.",
+                    AvtorObjave="Julija Oblak",
+                    DatumObjave=DateTime.Parse("2023-12-02")},
+                new ObjavaNudimOa{Ime="Peter",
+                    Priimek="Bogataj",
+                    Lokacija="Ljubljana",
+                    Opis="Rad bi se preizkusil v delu osebnega asistenta. Izkušenj z osebno aasistenco nimam, rad pa pomagam ljudem, sem prilagodljiv in sem se pripravljen učiti.",
+                    AvtorObjave="Peter Bogataj",
+                    DatumObjave=DateTime.Parse("2023-06-12")},
+                new ObjavaNudimOa{Ime="Mateja",
+                    Priimek="Novak",
+                    Lokacija="Maribor",
+                    Opis="Zanimam se za delo osebne asistentke.",
+                    AvtorObjave="Mateja Novak",
+                    DatumObjave=DateTime.Parse("2024-01-02")},
+                new ObjavaNudimOa{Ime="Anže",
+                    Priimek="Lapajne",
+                    Lokacija="Postojna",
+                    Opis="",
+                    AvtorObjave="Anže Lapajne",
+                    DatumObjave=DateTime.Parse("2023-07-12"),
+                    }
+            );
+            context.SaveChanges();
+
+            context.NudimNadomescanje.AddRange(
+                new NudimNadomescanje{Ime="Julči",
+                    Priimek="Mrak",
+                    Lokacija="Postojna",
+                    AvtorObjave="Julči Mrak",
+                    OdDatuma=DateTime.Parse("2024-02-01"),
+                    DoDatuma=DateTime.Parse("2024-02-20"),
+                    }
+            );
+            context.SaveChanges();
         }
     }
 }

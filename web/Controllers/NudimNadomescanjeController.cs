@@ -13,58 +13,65 @@ using Microsoft.AspNetCore.Authorization;
 namespace web.Controllers
 {
     [Authorize]
-    public class ObjaveIscemOaController : Controller
+    public class NudimNadomescanjeController : Controller
     {
         private readonly oaContext _context;
         private readonly UserManager<ApplicationUser> _usermanager;
 
-        public ObjaveIscemOaController(oaContext context, UserManager<ApplicationUser> userManager)
+        public NudimNadomescanjeController(oaContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _usermanager = userManager;
         }
 
-        // GET: ObjaveIscemOa
+        // GET: NudimNadomescanje
         public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            ViewData["DatumObjaveSortParm"] = String.IsNullOrEmpty(sortOrder) ? "" : "Datum_desc";
+            ViewData["PdDatumaSortParm"] = sortOrder == "OdDatuma" ? "OdDatuma_asc" : "OdDatuma_desc";
+            ViewData["DoDatumaSortParm"] = sortOrder == "DoDatuma" ? "DoDatuma_asc" : "DoDatuma_desc";
             ViewData["ImeSortParm"] = sortOrder == "Ime" ? "Ime_desc" : "Ime_asc";
             ViewData["PriimekSortParm"] = sortOrder == "Priimek" ? "Priimek_desc" : "Priimek_asc";
             ViewData["CurrentFilter"] = searchString;
    
-            var objaveIscem = from o in _context.ObjaveIscemOa
+            var nudimNadomescanje = from o in _context.NudimNadomescanje
                 select o;
             if (!String.IsNullOrEmpty(searchString))
             {
-                objaveIscem = objaveIscem.Where(o => o.Ime.Contains(searchString)
-                                    || o.Priimek.Contains(searchString) || o.Lokacija.Contains(searchString)
-                                    || o.DelovniCas.Contains(searchString));
+                nudimNadomescanje = nudimNadomescanje.Where(o => o.Ime.Contains(searchString)
+                                    || o.Priimek.Contains(searchString) || o.Lokacija.Contains(searchString));
             }
             switch (sortOrder)
             {
                 case "Ime_desc":
-                    objaveIscem = objaveIscem.OrderByDescending(o => o.Ime);
+                    nudimNadomescanje = nudimNadomescanje.OrderByDescending(o => o.Ime);
                     break;
                 case "Ime_asc":
-                    objaveIscem = objaveIscem.OrderBy(o => o.Ime);
+                    nudimNadomescanje = nudimNadomescanje.OrderBy(o => o.Ime);
                     break;
                 case "Priimek_desc":
-                    objaveIscem = objaveIscem.OrderByDescending(o => o.Priimek);
+                    nudimNadomescanje = nudimNadomescanje.OrderByDescending(o => o.Priimek);
                     break;
                 case "Priimek_asc":
-                    objaveIscem = objaveIscem.OrderBy(o => o.Priimek);
+                    nudimNadomescanje = nudimNadomescanje.OrderBy(o => o.Priimek);
                     break;
-                case "Datum_desc":
-                    objaveIscem = objaveIscem.OrderByDescending(o => o.DatumObjave);
+                case "OdDatuma_desc":
+                    nudimNadomescanje = nudimNadomescanje.OrderByDescending(o => o.OdDatuma);
+                    break;
+                case "DoDatuma_asc":
+                    nudimNadomescanje = nudimNadomescanje.OrderBy(o => o.DoDatuma);
+                    break;
+                case "DoDatuma_desc":
+                    nudimNadomescanje = nudimNadomescanje.OrderByDescending(o => o.DoDatuma);
                     break;
                 default:
-                    objaveIscem = objaveIscem.OrderBy(o => o.DatumObjave);
+                    nudimNadomescanje = nudimNadomescanje.OrderBy(o => o.OdDatuma);
                     break;
             }
-            return View(await objaveIscem.AsNoTracking().ToListAsync());
+            return View(await nudimNadomescanje.AsNoTracking().ToListAsync());
         }
 
-        // GET: ObjaveIscemOa/Details/5
+
+        // GET: NudimNadomescanje/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -72,44 +79,43 @@ namespace web.Controllers
                 return NotFound();
             }
 
-            var objavaIscemOa = await _context.ObjaveIscemOa
+            var nudimNadomescanje = await _context.NudimNadomescanje
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (objavaIscemOa == null)
+            if (nudimNadomescanje == null)
             {
                 return NotFound();
             }
 
-            return View(objavaIscemOa);
+            return View(nudimNadomescanje);
         }
 
-        // GET: ObjaveIscemOa/Create
+        // GET: NudimNadomescanje/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: ObjaveIscemOa/Create
+        // POST: NudimNadomescanje/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Ime,Priimek,Lokacija,DelovniCas,Opis")] ObjavaIscemOa objavaIscemOa)
-        {
+        public async Task<IActionResult> Create([Bind("ID,Ime,Priimek,Lokacija,OdDatuma,DoDatuma,AvtorObjave")] NudimNadomescanje nudimNadomescanje)
+          {
             var currentUser = await _usermanager.GetUserAsync(User);
             var currUserName = currentUser.UserName;
             DateTime DT = DateTime.Now;
             if (ModelState.IsValid)
             {
-                objavaIscemOa.DatumObjave = DT;
-                objavaIscemOa.AvtorObjave = currUserName;
-                _context.Add(objavaIscemOa);
+                nudimNadomescanje.AvtorObjave = currUserName;
+                _context.Add(nudimNadomescanje);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(objavaIscemOa);
+            return View(nudimNadomescanje);
         }
 
-        // GET: ObjaveIscemOa/Edit/5
+        // GET: NudimNadomescanje/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -117,22 +123,22 @@ namespace web.Controllers
                 return NotFound();
             }
 
-            var objavaIscemOa = await _context.ObjaveIscemOa.FindAsync(id);
-            if (objavaIscemOa == null)
+            var nudimNadomescanje = await _context.NudimNadomescanje.FindAsync(id);
+            if (nudimNadomescanje == null)
             {
                 return NotFound();
             }
-            return View(objavaIscemOa);
+            return View(nudimNadomescanje);
         }
 
-        // POST: ObjaveIscemOa/Edit/5
+        // POST: NudimNadomescanje/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Ime,Priimek,Lokacija,DelovniCas,Opis")] ObjavaIscemOa objavaIscemOa)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Ime,Priimek,Lokacija,OdDatuma,DoDatuma,AvtorObjave")] NudimNadomescanje nudimNadomescanje)
         {
-            if (id != objavaIscemOa.ID)
+            if (id != nudimNadomescanje.ID)
             {
                 return NotFound();
             }
@@ -141,12 +147,12 @@ namespace web.Controllers
             {
                 try
                 {
-                    _context.Update(objavaIscemOa);
+                    _context.Update(nudimNadomescanje);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ObjavaIscemOaExists(objavaIscemOa.ID))
+                    if (!NudimNadomescanjeExists(nudimNadomescanje.ID))
                     {
                         return NotFound();
                     }
@@ -157,10 +163,10 @@ namespace web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(objavaIscemOa);
+            return View(nudimNadomescanje);
         }
 
-        // GET: ObjaveIscemOa/Delete/5
+        // GET: NudimNadomescanje/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -168,34 +174,34 @@ namespace web.Controllers
                 return NotFound();
             }
 
-            var objavaIscemOa = await _context.ObjaveIscemOa
+            var nudimNadomescanje = await _context.NudimNadomescanje
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (objavaIscemOa == null)
+            if (nudimNadomescanje == null)
             {
                 return NotFound();
             }
 
-            return View(objavaIscemOa);
+            return View(nudimNadomescanje);
         }
 
-        // POST: ObjaveIscemOa/Delete/5
+        // POST: NudimNadomescanje/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var objavaIscemOa = await _context.ObjaveIscemOa.FindAsync(id);
-            if (objavaIscemOa != null)
+            var nudimNadomescanje = await _context.NudimNadomescanje.FindAsync(id);
+            if (nudimNadomescanje != null)
             {
-                _context.ObjaveIscemOa.Remove(objavaIscemOa);
+                _context.NudimNadomescanje.Remove(nudimNadomescanje);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ObjavaIscemOaExists(int id)
+        private bool NudimNadomescanjeExists(int id)
         {
-            return _context.ObjaveIscemOa.Any(e => e.ID == id);
+            return _context.NudimNadomescanje.Any(e => e.ID == id);
         }
     }
 }
