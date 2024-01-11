@@ -27,7 +27,7 @@ namespace web.Controllers
         // GET: NudimNadomescanje
         public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            ViewData["PdDatumaSortParm"] = sortOrder == "OdDatuma" ? "OdDatuma_asc" : "OdDatuma_desc";
+            ViewData["PdDatumaSortParm"] = String.IsNullOrEmpty(sortOrder) ? "" : "OdDatuma_desc";
             ViewData["DoDatumaSortParm"] = sortOrder == "DoDatuma" ? "DoDatuma_asc" : "DoDatuma_desc";
             ViewData["ImeSortParm"] = sortOrder == "Ime" ? "Ime_desc" : "Ime_asc";
             ViewData["PriimekSortParm"] = sortOrder == "Priimek" ? "Priimek_desc" : "Priimek_asc";

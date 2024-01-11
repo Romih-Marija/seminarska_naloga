@@ -91,8 +91,87 @@ namespace web.Data
                     AvtorObjave="Julči Mrak",
                     OdDatuma=DateTime.Parse("2024-02-01"),
                     DoDatuma=DateTime.Parse("2024-02-20"),
-                    }
+                    },
+                new NudimNadomescanje{Ime="Jure",
+                    Priimek="Trelec",
+                    Lokacija="Črnomelj",
+                    AvtorObjave="Jure Trelec",
+                    OdDatuma=DateTime.Parse("2024-01-12"),
+                    DoDatuma=DateTime.Parse("2024-02-02"),
+                    },
+                new NudimNadomescanje
+                {
+                    Ime = "Nejc",
+                    Priimek = "Novak",
+                    Lokacija = "Maribor",
+                    AvtorObjave = "Nejc Novak",
+                    OdDatuma = DateTime.Parse("2024-01-15"),
+                    DoDatuma = DateTime.Parse("2024-02-28"),
+                },
+                new NudimNadomescanje
+                {
+                    Ime = "Lea",
+                    Priimek = "Mlakar",
+                    Lokacija = "Kranj",
+                    AvtorObjave = "Lea Mlakar",
+                    OdDatuma = DateTime.Parse("2024-02-10"),
+                    DoDatuma = DateTime.Parse("2024-02-25"),
+                },
+                new NudimNadomescanje
+                {
+                    Ime = "Tine",
+                    Priimek = "Kovač",
+                    Lokacija = "Ljubljana",
+                    AvtorObjave = "Tine Kovač",
+                    OdDatuma = DateTime.Parse("2024-02-05"),
+                    DoDatuma = DateTime.Parse("2024-02-15"),
+                }
             );
+            context.SaveChanges();
+            
+            context.IscemNadomescanje.AddRange(
+                new IscemNadomescanje{Ime="Anita",
+                    Priimek="Mrak",
+                    Lokacija="Postojna",
+                    AvtorObjave="Anita Mrak",
+                    OdDatuma=DateTime.Parse("2024-02-01"),
+                    DoDatuma=DateTime.Parse("2024-02-20"),
+                    },
+                new IscemNadomescanje{Ime="Mark",
+                    Priimek="Trelec",
+                    Lokacija="Črnomelj",
+                    AvtorObjave="Mark Trelec",
+                    OdDatuma=DateTime.Parse("2024-01-12"),
+                    DoDatuma=DateTime.Parse("2024-02-02"),
+                    },
+                new IscemNadomescanje
+                {
+                    Ime = "Tina",
+                    Priimek = "Novak",
+                    Lokacija = "Maribor",
+                    AvtorObjave = "Tina Novak",
+                    OdDatuma = DateTime.Parse("2024-02-15"),
+                    DoDatuma = DateTime.Parse("2024-02-28"),
+                },
+                new IscemNadomescanje
+                {
+                    Ime = "Luka",
+                    Priimek = "Mlakar",
+                    Lokacija = "Kranj",
+                    AvtorObjave = "Luka Mlakar",
+                    OdDatuma = DateTime.Parse("2024-02-10"),
+                    DoDatuma = DateTime.Parse("2024-02-25"),
+                },
+                new IscemNadomescanje
+                {
+                    Ime = "Živa",
+                    Priimek = "Kovač",
+                    Lokacija = "Ljubljana",
+                    AvtorObjave = "Živa Kovač",
+                    OdDatuma = DateTime.Parse("2024-02-05"),
+                    DoDatuma = DateTime.Parse("2024-02-15"),
+                }
+                );
             context.SaveChanges();
         }
     }
