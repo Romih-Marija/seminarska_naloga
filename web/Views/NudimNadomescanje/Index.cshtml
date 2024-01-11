@@ -1,10 +1,10 @@
-@model IEnumerable<web.Models.ObjavaIscemOa>
+@model IEnumerable<web.Models.NudimNadomescanje>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Iščem asistenta</h1>
+<h1>Nudim nadomeščanje</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -27,22 +27,20 @@
             <th style="min-width: 80px;">
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["PriimekSortParm"]">@Html.DisplayNameFor(model => model.Priimek)</a>
             </th>
-            <th style="min-width: 100px;">
+            <th>
                 @Html.DisplayNameFor(model => model.Lokacija)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DelovniCas)
+            <</th>
+            <th style="min-width: 100px;">
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["OdDatumaSortParm"]">@Html.DisplayNameFor(model => model.OdDatuma)</a>
+            </th>
+            <th style="min-width: 100px;">
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DoDatumaSortParm"]">@Html.DisplayNameFor(model => model.DoDatuma)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Opis)
-            </th>
-             <th style="min-width: 100px;">
                 @Html.DisplayNameFor(model => model.AvtorObjave)
             </th>
-             <th style="min-width: 100px;">
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DatumObjaveSortParm"]">@Html.DisplayNameFor(model => model.DatumObjave)</a>
-            </th>
-            <th style="min-width: 100px;"></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -58,16 +56,13 @@
                 @Html.DisplayFor(modelItem => item.Lokacija)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DelovniCas)
+                @Html.DisplayFor(modelItem => item.OdDatuma)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Opis)
+                @Html.DisplayFor(modelItem => item.DoDatuma)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AvtorObjave)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DatumObjave)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

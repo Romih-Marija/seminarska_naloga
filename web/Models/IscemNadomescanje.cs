@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace web.Models
 
 {
-    public class ObjavaIscemOa
+    public class IscemNadomescanje
     {
         public int ID { get; set; }
         [Required]
@@ -16,17 +16,15 @@ namespace web.Models
         public required string Priimek { get; set; }
         [Required]
         [StringLength(50)]
-        public required string Lokacija { get; set; }
-        [Required]
-        [StringLength(50)]
-        [Display(Name = "Delovni čas")]
-        public required string DelovniCas { get; set; }
-        [StringLength(250)]
-        public string? Opis { get; set; }
+        public required string Lokacija { get; set; }  
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Datum")]
-        public DateTime? DatumObjave { get; set; }
+        [Display(Name = "Od datuma")]
+        public DateTime OdDatuma { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Do datuma")]
+        public DateTime DoDatuma { get; set; }
         [Display(Name = "Avtor")]
         public string? AvtorObjave { get; set; }
     }

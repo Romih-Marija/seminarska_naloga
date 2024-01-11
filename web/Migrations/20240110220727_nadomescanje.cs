@@ -5,7 +5,7 @@
 namespace web.Migrations
 {
     /// <inheritdoc />
-    public partial class Objave : Migration
+    public partial class nadomescanje : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -13,58 +13,65 @@ using Microsoft.AspNetCore.Authorization;
 namespace web.Controllers
 {
     [Authorize]
-    public class ObjaveIscemOaController : Controller
+    public class IscemNadomescanjeController : Controller
     {
         private readonly oaContext _context;
         private readonly UserManager<ApplicationUser> _usermanager;
 
-        public ObjaveIscemOaController(oaContext context, UserManager<ApplicationUser> userManager)
+        public IscemNadomescanjeController(oaContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _usermanager = userManager;
         }
 
-        // GET: ObjaveIscemOa
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        // GET: IscemNadomescanje
+       public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            ViewData["DatumObjaveSortParm"] = String.IsNullOrEmpty(sortOrder) ? "" : "Datum_desc";
+            ViewData["PdDatumaSortParm"] = String.IsNullOrEmpty(sortOrder) ? "" : "OdDatuma_desc";
+            ViewData["DoDatumaSortParm"] = sortOrder == "DoDatuma" ? "DoDatuma_asc" : "DoDatuma_desc";
             ViewData["ImeSortParm"] = sortOrder == "Ime" ? "Ime_desc" : "Ime_asc";
             ViewData["PriimekSortParm"] = sortOrder == "Priimek" ? "Priimek_desc" : "Priimek_asc";
             ViewData["CurrentFilter"] = searchString;
    
-            var objaveIscem = from o in _context.ObjaveIscemOa
+            var iscemNadomescanje = from o in _context.IscemNadomescanje
                 select o;
             if (!String.IsNullOrEmpty(searchString))
             {
-                objaveIscem = objaveIscem.Where(o => o.Ime.Contains(searchString)
-                                    || o.Priimek.Contains(searchString) || o.Lokacija.Contains(searchString)
-                                    || o.DelovniCas.Contains(searchString));
+                iscemNadomescanje = iscemNadomescanje.Where(o => o.Ime.Contains(searchString)
+                                    || o.Priimek.Contains(searchString) || o.Lokacija.Contains(searchString));
             }
             switch (sortOrder)
             {
                 case "Ime_desc":
-                    objaveIscem = objaveIscem.OrderByDescending(o => o.Ime);
+                    iscemNadomescanje = iscemNadomescanje.OrderByDescending(o => o.Ime);
                     break;
                 case "Ime_asc":
-                    objaveIscem = objaveIscem.OrderBy(o => o.Ime);
+                    iscemNadomescanje = iscemNadomescanje.OrderBy(o => o.Ime);
                     break;
                 case "Priimek_desc":
-                    objaveIscem = objaveIscem.OrderByDescending(o => o.Priimek);
+                    iscemNadomescanje = iscemNadomescanje.OrderByDescending(o => o.Priimek);
                     break;
                 case "Priimek_asc":
-                    objaveIscem = objaveIscem.OrderBy(o => o.Priimek);
+                    iscemNadomescanje = iscemNadomescanje.OrderBy(o => o.Priimek);
                     break;
-                case "Datum_desc":
-                    objaveIscem = objaveIscem.OrderByDescending(o => o.DatumObjave);
+                case "OdDatuma_desc":
+                    iscemNadomescanje = iscemNadomescanje.OrderByDescending(o => o.OdDatuma);
+                    break;
+                case "DoDatuma_asc":
+                    iscemNadomescanje = iscemNadomescanje.OrderBy(o => o.DoDatuma);
+                    break;
+                case "DoDatuma_desc":
+                    iscemNadomescanje = iscemNadomescanje.OrderByDescending(o => o.DoDatuma);
                     break;
                 default:
-                    objaveIscem = objaveIscem.OrderBy(o => o.DatumObjave);
+                    iscemNadomescanje = iscemNadomescanje.OrderBy(o => o.OdDatuma);
                     break;
             }
-            return View(await objaveIscem.AsNoTracking().ToListAsync());
+            return View(await iscemNadomescanje.AsNoTracking().ToListAsync());
         }
 
-        // GET: ObjaveIscemOa/Details/5
+
+        // GET: IscemNadomescanje/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -72,44 +79,43 @@ namespace web.Controllers
                 return NotFound();
             }
 
-            var objavaIscemOa = await _context.ObjaveIscemOa
+            var iscemNadomescanje = await _context.IscemNadomescanje
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (objavaIscemOa == null)
+            if (iscemNadomescanje == null)
             {
                 return NotFound();
             }
 
-            return View(objavaIscemOa);
+            return View(iscemNadomescanje);
         }
 
-        // GET: ObjaveIscemOa/Create
+        // GET: IscemNadomescanje/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: ObjaveIscemOa/Create
+        // POST: IscemNadomescanje/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Ime,Priimek,Lokacija,DelovniCas,Opis")] ObjavaIscemOa objavaIscemOa)
-        {
+        public async Task<IActionResult> Create([Bind("ID,Ime,Priimek,Lokacija,OdDatuma,DoDatuma,AvtorObjave")] IscemNadomescanje iscemNadomescanje)
+          {
             var currentUser = await _usermanager.GetUserAsync(User);
             var currUserName = currentUser.UserName;
             DateTime DT = DateTime.Now;
             if (ModelState.IsValid)
             {
-                objavaIscemOa.DatumObjave = DT;
-                objavaIscemOa.AvtorObjave = currUserName;
-                _context.Add(objavaIscemOa);
+                iscemNadomescanje.AvtorObjave = currUserName;
+                _context.Add(iscemNadomescanje);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(objavaIscemOa);
+            return View(iscemNadomescanje);
         }
 
-        // GET: ObjaveIscemOa/Edit/5
+        // GET: IscemNadomescanje/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -117,22 +123,22 @@ namespace web.Controllers
                 return NotFound();
             }
 
-            var objavaIscemOa = await _context.ObjaveIscemOa.FindAsync(id);
-            if (objavaIscemOa == null)
+            var iscemNadomescanje = await _context.IscemNadomescanje.FindAsync(id);
+            if (iscemNadomescanje == null)
             {
                 return NotFound();
             }
-            return View(objavaIscemOa);
+            return View(iscemNadomescanje);
         }
 
-        // POST: ObjaveIscemOa/Edit/5
+        // POST: IscemNadomescanje/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Ime,Priimek,Lokacija,DelovniCas,Opis")] ObjavaIscemOa objavaIscemOa)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Ime,Priimek,Lokacija,OdDatuma,DoDatuma,AvtorObjave")] IscemNadomescanje iscemNadomescanje)
         {
-            if (id != objavaIscemOa.ID)
+            if (id != iscemNadomescanje.ID)
             {
                 return NotFound();
             }
@@ -141,12 +147,12 @@ namespace web.Controllers
             {
                 try
                 {
-                    _context.Update(objavaIscemOa);
+                    _context.Update(iscemNadomescanje);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ObjavaIscemOaExists(objavaIscemOa.ID))
+                    if (!IscemNadomescanjeExists(iscemNadomescanje.ID))
                     {
                         return NotFound();
                     }
@@ -157,10 +163,10 @@ namespace web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(objavaIscemOa);
+            return View(iscemNadomescanje);
         }
 
-        // GET: ObjaveIscemOa/Delete/5
+        // GET: IscemNadomescanje/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -168,34 +174,34 @@ namespace web.Controllers
                 return NotFound();
             }
 
-            var objavaIscemOa = await _context.ObjaveIscemOa
+            var iscemNadomescanje = await _context.IscemNadomescanje
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (objavaIscemOa == null)
+            if (iscemNadomescanje == null)
             {
                 return NotFound();
             }
 
-            return View(objavaIscemOa);
+            return View(iscemNadomescanje);
         }
 
-        // POST: ObjaveIscemOa/Delete/5
+        // POST: IscemNadomescanje/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var objavaIscemOa = await _context.ObjaveIscemOa.FindAsync(id);
-            if (objavaIscemOa != null)
+            var iscemNadomescanje = await _context.IscemNadomescanje.FindAsync(id);
+            if (iscemNadomescanje != null)
             {
-                _context.ObjaveIscemOa.Remove(objavaIscemOa);
+                _context.IscemNadomescanje.Remove(iscemNadomescanje);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ObjavaIscemOaExists(int id)
+        private bool IscemNadomescanjeExists(int id)
         {
-            return _context.ObjaveIscemOa.Any(e => e.ID == id);
+            return _context.IscemNadomescanje.Any(e => e.ID == id);
         }
     }
 }

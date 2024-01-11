@@ -1,10 +1,10 @@
-@model IEnumerable<web.Models.ObjavaIscemOa>
+@model IEnumerable<web.Models.ObjavaNudimOa>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Iščem asistenta</h1>
+<h1>Nudim asistenco</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -31,16 +31,13 @@
                 @Html.DisplayNameFor(model => model.Lokacija)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DelovniCas)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Opis)
             </th>
-             <th style="min-width: 100px;">
-                @Html.DisplayNameFor(model => model.AvtorObjave)
-            </th>
-             <th style="min-width: 100px;">
+            <th style="min-width: 100px;">
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["DatumObjaveSortParm"]">@Html.DisplayNameFor(model => model.DatumObjave)</a>
+            </th>
+            <th style="min-width: 100px;">
+                @Html.DisplayNameFor(model => model.AvtorObjave)
             </th>
             <th style="min-width: 100px;"></th>
         </tr>
@@ -58,16 +55,13 @@
                 @Html.DisplayFor(modelItem => item.Lokacija)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DelovniCas)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Opis)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AvtorObjave)
+                @Html.DisplayFor(modelItem => item.DatumObjave)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DatumObjave)
+                @Html.DisplayFor(modelItem => item.AvtorObjave)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

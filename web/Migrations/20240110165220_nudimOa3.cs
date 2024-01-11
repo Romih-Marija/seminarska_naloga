@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace web.Migrations
 {
     /// <inheritdoc />
-    public partial class AppUser : Migration
+    public partial class nudimOa3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -51,6 +51,43 @@ namespace web.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ObjavaIscemOa",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Ime = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Priimek = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Lokacija = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    DelovniCas = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Opis = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    DatumObjave = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    AvtorObjave = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ObjavaIscemOa", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ObjavaNudimOa",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Ime = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Priimek = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Lokacija = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Opis = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    DatumObjave = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    AvtorObjave = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ObjavaNudimOa", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -232,6 +269,12 @@ namespace web.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "ObjavaIscemOa");
+
+            migrationBuilder.DropTable(
+                name: "ObjavaNudimOa");
 
             migrationBuilder.DropTable(
                 name: "UporabniskiRacun");
