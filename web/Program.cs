@@ -6,9 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<azureContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("azureContext") ?? throw new InvalidOperationException("Connection string 'azureContext' not found.")));
-    
 // Add services to the container.
     var connectionString = builder.Configuration.GetConnectionString("azureContext");
     builder.Services.AddDbContext<oaContext>(options =>
