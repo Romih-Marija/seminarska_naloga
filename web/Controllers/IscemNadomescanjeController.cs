@@ -28,7 +28,7 @@ namespace web.Controllers
        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             ViewData["PdDatumaSortParm"] = String.IsNullOrEmpty(sortOrder) ? "" : "OdDatuma_desc";
-            ViewData["DoDatumaSortParm"] = sortOrder == "DoDatuma" ? "DoDatuma_asc" : "DoDatuma_desc";
+            ViewData["DoDatumaSortParm"] = sortOrder == "DoDatuma" ? "DoDatuma_desc" : "DoDatuma_asc";
             ViewData["ImeSortParm"] = sortOrder == "Ime" ? "Ime_desc" : "Ime_asc";
             ViewData["PriimekSortParm"] = sortOrder == "Priimek" ? "Priimek_desc" : "Priimek_asc";
             ViewData["CurrentFilter"] = searchString;

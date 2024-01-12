@@ -7,7 +7,7 @@ using web.Models;
 var builder = WebApplication.CreateBuilder(args);
     
 // Add services to the container.
-    var connectionString = builder.Configuration.GetConnectionString("oaContext");
+    var connectionString = builder.Configuration.GetConnectionString("azureContext");
     builder.Services.AddDbContext<oaContext>(options =>
         options.UseSqlServer(connectionString));
 
