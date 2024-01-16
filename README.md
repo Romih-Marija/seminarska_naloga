@@ -29,3 +29,8 @@ Mobilna aplikacija ima gumb, ki ob kliku prikaže osebe, ki išejo asistenco.
 
 <img src="https://github.com/Romih-Marija/seminarska_naloga/assets/77491244/1bf14e0a-053a-46e4-93f5-af2850eecbeb" width="350">     <img src="https://github.com/Romih-Marija/seminarska_naloga/assets/77491244/8823e3bc-07d1-41eb-b33d-86e4a72d7adc" width="340">
 
+Uporabnik aplikacije lahko objavi eno objavo Iščem/Nudim asistenco in več objav Iščem/Nudim nadomeščanje.
+
+![Posnetek zaslona (9)](https://github.com/Romih-Marija/seminarska_naloga/assets/77491244/41a357e6-ac58-4690-8211-0b4d4105c119)
+
+
