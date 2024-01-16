@@ -50,7 +50,7 @@ namespace web.Data
                     DelovniCas="polni delovni čas/ izmenično",
                     Opis="",
                     AvtorObjave="Ana Arh",
-                    DatumObjave=DateTime.Parse("2023-05-12"),
+                   DatumObjave=DateTime.Parse("2023-05-12"),
                     }
             );
             context.SaveChanges();

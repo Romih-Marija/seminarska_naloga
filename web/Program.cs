@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
-    var connectionString = builder.Configuration.GetConnectionString("azureContext");
+    var connectionString = builder.Configuration.GetConnectionString("oaContext");
     builder.Services.AddDbContext<oaContext>(options =>
         options.UseSqlServer(connectionString));
 
@@ -16,6 +16,8 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
         .AddRoles<IdentityRole>()
         .AddEntityFrameworkStores<oaContext>();
+    
+    builder.Services.AddSwaggerGen();
         
 
 
@@ -37,6 +39,12 @@ if (!app.Environment.IsDevelopment())
 }
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API");
+});
 
 app.UseRouting();
 app.UseAuthentication();

@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using web.Data;
 using web.Models;
+using web.Filters;
 
 namespace web.Controllers_Api
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiKeyAuth]
     public class IscemNadomescanjeApiController : ControllerBase
     {
         private readonly oaContext _context;
@@ -27,7 +29,6 @@ namespace web.Controllers_Api
         {
             return await _context.IscemNadomescanje.ToListAsync();
         }
-
         // GET: api/IscemNadomescanjeApi/5
         [HttpGet("{id}")]
         public async Task<ActionResult<IscemNadomescanje>> GetIscemNadomescanje(int id)
